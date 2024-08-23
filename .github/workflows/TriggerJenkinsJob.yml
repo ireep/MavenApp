@@ -20,7 +20,7 @@ jobs:
       run: mvn -B test --file pom.xml
 
     - name: connect to Lab and trigger Jenkins Job
-      uses: cross-the-world/ssh-scp-ssh-pipeline@latest
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       with:
         host: ${{ secrets.LAB_HOSTNAME }}
         user: ${{ secrets.LAB_USERNAME }}

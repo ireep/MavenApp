@@ -22,7 +22,7 @@ jobs:
     - name: connect to Lab and trigger Jenkins Job
       uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
       with:
-        host: ${{ secrets.LAB_HOSTNAME }}
+        host: ${{ secrets.LAB_HOST_NAME }}
         user: ${{ secrets.LAB_USERNAME }}
         pass: ${{ secrets.LAB_PASSWORD }}
         port: ${{ secrets.LAB_PORT }}

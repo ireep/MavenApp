@@ -1,0 +1,32 @@
+on:
+  push:
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Maven Action
+      uses: s4u/setup-maven-action@v.1.70
+      with: 
+        checkout-fetch-depth: 0
+        java-version: 17
+        java-distribution: temurin
+        maven-version: 3.9.8
+    
+    - name: Test with Maven
+      run: mvn -B test --file pom.xml
+
+    - name: connect to Lab and trigger Jenkins Job
+      uses: cross-the-world/ssh-scp-ssh-pipeline@latest
+      with:
+        host: ${{ secrets.LAB_HOSTNAME }}
+        user: ${{ secrets.LAB_USERNAME }}
+        pass: ${{ secrets.LAB_PASSWORD }}
+        port: ${{ secrets.LAB_PORT }}
+
+        connection_timeout: 10s 
+        first_ssh: |
+          sudo curl -I -u admin:110ecd68df71611a7fe578c04f59f1bff3 http://localhost:8080/job/DemoDeploy/build?token=my_custom_token
